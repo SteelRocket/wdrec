@@ -8,15 +8,29 @@
 //                      Key Map
 // ---------------------------------------------------------
 
-bool __char_is_shifted(char c) { return HIBYTE(VkKeyScan(c)); }
+bool __char_is_shifted(char c) {
+#ifdef _WIN32
+    return HIBYTE(VkKeyScan(c));
+#else
+#error "not implemented in NON WINDOWS PLATFORMS"
+#endif
+}
 
-int __char_to_vk(char c) { return LOBYTE(VkKeyScan(c)); }
+int __char_to_vk(char c) {
+#ifdef _WIN32
+    return LOBYTE(VkKeyScan(c));
+#else
+#error "not implemented in NON WINDOWS PLATFORMS"
+#endif
+}
 
 // ---------------------------------------------------------
 
 bool keytyper_is_pressed(int keycode) {
 #ifdef _WIN32
     return GetAsyncKeyState(keycode) < 0;
+#else
+#error "not implemented in NON WINDOWS PLATFORMS"
 #endif
 }
 
@@ -34,6 +48,8 @@ void keytyper_key_press(int vk_code, KeyHookInfo keyhook_info) {
     input.ki.dwExtraInfo = keyhook_info;
 
     SendInput(1, &input, sizeof(INPUT));
+#else
+#error "not implemented in NON WINDOWS PLATFORMS"
 #endif
 }
 
@@ -49,6 +65,8 @@ void keytyper_key_release(int vk_code, KeyHookInfo keyhook_info) {
     input.ki.dwExtraInfo = keyhook_info;
 
     SendInput(1, &input, sizeof(INPUT));
+#else
+#error "not implemented in NON WINDOWS PLATFORMS"
 #endif
 }
 
@@ -73,6 +91,8 @@ void keytyper_type(unsigned int c, KeyHookInfo keyhook_info) {
     SendInput(1, &input, sizeof(INPUT));
     input.ki.dwFlags |= KEYEVENTF_KEYUP;
     SendInput(1, &input, sizeof(INPUT));
+#else
+#error "not implemented in NON WINDOWS PLATFORMS"
 #endif
 }
 

@@ -2,13 +2,13 @@
 
 #define __LEN(a) sizeof(a) / sizeof(a[0])
 
-// ---------------------------
-//       Server Command
-// ---------------------------
+// ---------------------------------------------------------
+//                    Server Command
+// ---------------------------------------------------------
 
 Option __server_opts[] = {{
     .flags = "-p,--port",
-    .help = "Port of the api_server",
+    .help = "Port of the api server",
     .has_value = true,
     .default_value = "8000",
     .is_required = false,
@@ -19,9 +19,9 @@ ArgParser *__wparser_server() {
                          __LEN(__server_opts), NULL, 0);
 }
 
-// ---------------------------
-//        Add Command
-// ---------------------------
+// ---------------------------------------------------------
+//                      Add Command
+// ---------------------------------------------------------
 
 Option __add_opts[] = {{
     .flags = "-t,--tmp",
@@ -46,9 +46,9 @@ ArgParser *__wparser_add() {
                          __LEN(__add_opts), __add_pos, __LEN(__add_pos));
 }
 
-// ---------------------------
-//        Remove Command
-// ---------------------------
+// ---------------------------------------------------------
+//                      Remove Command
+// ---------------------------------------------------------
 
 Positional __remove_pos[] = {{
     .name = "identifier",
@@ -68,27 +68,27 @@ ArgParser *__wparser_remove() {
                          __LEN(__remove_pos));
 }
 
-// ---------------------------
+// ---------------------------------------------------------
 //        Remove Command
-// ---------------------------
+// ---------------------------------------------------------
 
 ArgParser *__wparser_close() {
     return argparse_init("close", "Closes the running wdrec instance", NULL, 0,
                          NULL, 0);
 }
 
-// ---------------------------
-//        List Command
-// ---------------------------
+// ---------------------------------------------------------
+//                      List Command
+// ---------------------------------------------------------
 
 ArgParser *__wparser_list() {
     return argparse_init("list", "List the given replace words", NULL, 0, NULL,
                          0);
 }
 
-// ---------------------------
-//       Config Command
-// ---------------------------
+// ---------------------------------------------------------
+//                      Config Command
+// ---------------------------------------------------------
 Option __config_opts[] = {
     {
         .flags = "-i,--id",
@@ -127,10 +127,32 @@ ArgParser *__wparser_config() {
                          __LEN(__config_pos));
 }
 
+// ---------------------------------------------------------
+//              Default(no subparser) Command
+// ---------------------------------------------------------
+Option __default_opts[] = {
+    {
+        .flags = "-p,--port",
+        .help = "Port of the api server",
+        .has_value = true,
+        .default_value = "8000",
+        .is_required = false,
+    },
+    {
+        .flags = "-v,--version",
+        .help = "Returns wdrec version",
+        .has_value = false,
+        .is_required = false,
+    },
+};
+
+ArgParser *__wparser_default() {
+    return argparse_init("wdrec", "Command line app to replace typed words",
+                         __default_opts, __LEN(__default_opts), NULL, 0);
+}
+
 ArgParser *wparser_init() {
-    ArgParser *wdrec_parser = __wparser_server();
-    wdrec_parser->name = "wdrec";
-    wdrec_parser->help = "Command line app to replace typed words";
+    ArgParser *wdrec_parser = __wparser_default();
 
     argparse_add_subparser(wdrec_parser, __wparser_server());
     argparse_add_subparser(wdrec_parser, __wparser_close());

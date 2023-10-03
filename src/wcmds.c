@@ -86,6 +86,11 @@ RWIdentifier __append_identifier(Args *args, char **url, const char *word,
 // ---------------------------------------------------------
 
 int wcmd_start_server(Args *args) {
+    if (argparse_flag_found(args, "--version")) {
+        printf("version %s\n", WDREC_VERSION);
+        return 1;
+    }
+
     int port = atoi(argparse_flag_get(args, "--port"));
     if (port <= 0) {
         argparse_print_help(args->parser);

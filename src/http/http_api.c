@@ -195,7 +195,9 @@ Response *__handle_config(Request *request) {
 
 Response *_http_api_handle(Request *request) {
 
-    if (str_eq(request->path, "/add")) {
+    if (str_eq(request->path, "/version")) {
+        return response_new(200, WDREC_VERSION);
+    } else if (str_eq(request->path, "/add")) {
         return __handle_add(request);
     } else if (str_eq(request->path, "/remove")) {
         return __handle_remove(request);

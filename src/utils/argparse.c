@@ -256,19 +256,30 @@ void __handle_error(__StatusPair status) {
 //         Utilities
 // ----------------------------
 bool __flag_matches(const char *flags, const char *args) {
-    char *cargs = strdup(args);
-    char *save;
-    char *arg = strtok_r(cargs, ",", &save);
+    char *cs1 = strdup(flags);
+    char *cs2 = strdup(args);
 
-    while (arg != NULL) {
-        if (strstr(flags, arg)) {
-            free(cargs);
-            return true;
+    char *token1, *token2;
+    char *saveptr1, *saveptr2;
+
+    token1 = strtok_r(cs1, ",", &saveptr1);
+
+    while (token1 != NULL) {
+        token2 = strtok_r(cs2, ",", &saveptr2);
+
+        while (token2 != NULL) {
+            if (strcmp(token1, token2) == 0) {
+                free(cs1);
+                free(cs2);
+                return true;
+            }
+            token2 = strtok_r(NULL, ",", &saveptr2);
         }
-        arg = strtok_r(NULL, ",", &save);
+        token1 = strtok_r(NULL, ",", &saveptr1);
     }
 
-    free(cargs);
+    free(cs1);
+    free(cs2);
     return false;
 }
 
