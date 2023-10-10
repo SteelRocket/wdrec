@@ -8,8 +8,6 @@
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 
-int inet_pton(int af, const char *src, void *dst);
-
 #else
 
 #include <arpa/inet.h>
@@ -48,6 +46,13 @@ int socket_recv(SOCKET socket, char *buffer, int buffer_length,
                 int timeout_sec);
 
 #ifdef UTILS_IMPLEMENTATION
+
+#if defined(_WIN32) && defined(__MINGW32__) && !defined(__MINGW64__)
+int inet_pton(int af, const char *src, void *dst) {
+    ((struct in_addr *)dst)->s_addr = inet_addr(src);
+    return 1;
+}
+#endif
 
 int socket_init() {
 #ifdef _WIN32
