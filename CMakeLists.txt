@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(wdrec VERSION 0.1.0)
+project(wdrec VERSION 0.1.1)
 
 add_compile_definitions(WDREC_VERSION="${PROJECT_VERSION}")
 
