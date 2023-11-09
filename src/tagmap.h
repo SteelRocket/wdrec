@@ -32,6 +32,11 @@ typedef struct TagMap {
     const char *(*validator)(Tag *);
 } TagMap;
 
+extern const TagMap __tagmap_word[];
+extern const TagMap __tagmap_replace[];
+extern const size_t __tagmap_word_len;
+extern const size_t __tagmap_replace_len;
+
 /**
  * @brief Returns the character for the respective tag name
  *
@@ -65,7 +70,7 @@ const TagMap *tagmap_get(const char *tag_name, bool is_replace);
  * @param word the input word tag
  * @return error message on error else it returns NULL
  */
-char *tagmap_word_valid(Tag *word);
+char *tagvalid_word(Tag *word);
 
 /**
  * @brief Checks if given replace tag contains valid sub tags
@@ -73,4 +78,4 @@ char *tagmap_word_valid(Tag *word);
  * @param replace the input replace tag
  * @return error message on error else it returns NULL
  */
-char *tagmap_replace_valid(Tag *replace);
+char *tagvalid_replace(Tag *replace);

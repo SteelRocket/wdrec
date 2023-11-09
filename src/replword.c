@@ -58,11 +58,11 @@ char *__add_replword(ReplaceWord *replword) {
 }
 
 ReplaceWord *__replword_from_tags(Tag *word, Tag *replace, char **error_msg) {
-    if ((*error_msg = tagmap_word_valid(word)) != NULL) {
+    if ((*error_msg = tagvalid_word(word)) != NULL) {
         return NULL;
     }
 
-    if ((*error_msg = tagmap_replace_valid(replace)) != NULL) {
+    if ((*error_msg = tagvalid_replace(replace)) != NULL) {
         return NULL;
     }
 

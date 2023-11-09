@@ -20,6 +20,8 @@
 #define KEYTYPER_SHIFT VK_SHIFT
 #define KEYTYPER_CONTROL VK_CONTROL
 
+#define KEYTYPER_WIN VK_LWIN
+
 #else
 #error "not implemented in NON WINDOWS PLATFORMS"
 #endif

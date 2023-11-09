@@ -24,6 +24,15 @@ int __char_to_vk(char c) {
 #endif
 }
 
+#ifdef _WIN32
+bool __vk_is_extended(int vk) {
+    return (vk >= 0x21 && vk <= 0x28) || // Page, Home, End, Arrow keys
+           (vk >= 0x2D && vk <= 0x2E) || // Insert, Delete
+           (vk >= 0x5B && vk <= 0x5C) || // LWIN, RWIN
+           (vk >= 0x70 && vk <= 0x87);   // F1 to F24
+}
+#endif
+
 // ---------------------------------------------------------
 
 bool keytyper_is_pressed(int keycode) {
@@ -43,7 +52,8 @@ void keytyper_key_press(int vk_code, KeyHookInfo keyhook_info) {
     input.type = INPUT_KEYBOARD;
     input.ki.wVk = 0;
     input.ki.wScan = MapVirtualKeyA(vk_code, 0);
-    input.ki.dwFlags = KEYEVENTF_SCANCODE;
+    input.ki.dwFlags = KEYEVENTF_SCANCODE |
+                       (__vk_is_extended(vk_code) ? KEYEVENTF_EXTENDEDKEY : 0);
     input.ki.time = 0;
     input.ki.dwExtraInfo = keyhook_info;
 
@@ -60,7 +70,8 @@ void keytyper_key_release(int vk_code, KeyHookInfo keyhook_info) {
     input.type = INPUT_KEYBOARD;
     input.ki.wVk = 0;
     input.ki.wScan = MapVirtualKeyA(vk_code, 0);
-    input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
+    input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP |
+                       (__vk_is_extended(vk_code) ? KEYEVENTF_EXTENDEDKEY : 0);
     input.ki.time = 0;
     input.ki.dwExtraInfo = keyhook_info;
 

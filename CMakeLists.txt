@@ -11,7 +11,10 @@ add_executable(wdrec
     src/main.c
     src/data.c
     src/replword.c
+
     src/tagmap.c
+    src/tagvalid.c
+    
     src/wcmds.c
     src/wparser.c
 )
