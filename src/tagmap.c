@@ -105,6 +105,9 @@ const TagMap __tagmap_replace[] = {
 
     __STD_KEYMAP("shift", '\0', KEYTYPER_SHIFT, TOPT_NONE),
     __STD_KEYMAP("ctrl", '\0', KEYTYPER_CONTROL, TOPT_NONE),
+    __STD_KEYMAP("alt", '\0', KEYTYPER_ALT, TOPT_NONE),
+
+    __STD_KEYMAP("win", '\0', KEYTYPER_WIN, TOPT_NONE),
 
     {"uni", '\0', -1, TOPT_NSTANDALONE_TEXT, .press = __tg_unicode_type,
      .validator = __tv_unicode},

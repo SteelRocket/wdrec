@@ -183,5 +183,10 @@ int keytyper_replace(size_t replace_len, Tag *tag, KeyHookInfo keyhook_info) {
     for (size_t i = 0; i < replace_len; i++) {
         keytyper_key(KEYTYPER_BACKSPACE, keyhook_info);
     }
+#ifdef _WIN32
+    // Needed as for "<alt><tab></alt>", ...
+    // some of the backspaces seems to occur after the replace word is typed
+    Sleep(1);
+#endif
     return __keytyper_replace(tag, keyhook_info);
 }
